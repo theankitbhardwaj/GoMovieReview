@@ -7,16 +7,16 @@ import (
 )
 
 type Review struct {
-	Id          uuid.UUID `json:"id"`
-	MovieName   string    `json:"movie_name"`
-	Rating      int       `json:"rating"`
-	Description string    `json:"description"`
+	Id        uuid.UUID `json:"id"`
+	MovieName string    `json:"movie_name"`
+	Rating    int       `json:"rating"`
+	Comment   string    `json:"comment"`
 }
 
 type CreateReview struct {
-	MovieName   string `json:"movie_name"`
-	Rating      int    `json:"rating"`
-	Description string `json:"description"`
+	MovieName string `json:"movie_name"`
+	Rating    int    `json:"rating"`
+	Comment   string `json:"comment"`
 }
 
 type MyError struct {
@@ -25,11 +25,11 @@ type MyError struct {
 
 type APIFunc func(w http.ResponseWriter, r *http.Request) error
 
-func NewReview(movieName string, rating int, desc string) *Review {
+func NewReview(movieName string, rating int, comment string) *Review {
 	return &Review{
-		Id:          uuid.New(),
-		MovieName:   movieName,
-		Rating:      rating,
-		Description: desc,
+		Id:        uuid.New(),
+		MovieName: movieName,
+		Rating:    rating,
+		Comment:   comment,
 	}
 }

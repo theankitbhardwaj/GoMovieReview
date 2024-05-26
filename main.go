@@ -3,13 +3,13 @@ package main
 import "log"
 
 func main() {
-	store, err := NewMyStore()
+	store, err := NewTempStore()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	store.setupDB()
+	store.init()
 
 	server := NewAPIServer(":8080", store)
 

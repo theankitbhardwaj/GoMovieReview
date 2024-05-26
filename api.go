@@ -67,7 +67,7 @@ func (s *APIServer) handlePostMovieReview(w http.ResponseWriter, r *http.Request
 		return err
 	}
 
-	review := NewReview(createReview.MovieName, createReview.Rating, createReview.Description)
+	review := NewReview(createReview.MovieName, createReview.Rating, createReview.Comment)
 
 	if err := s.store.CreateReview(review); err != nil {
 		return WriteJSON(w, http.StatusInternalServerError, err.Error())
@@ -112,7 +112,7 @@ func (s *APIServer) handleUpdateMovieReview(w http.ResponseWriter, r *http.Reque
 		return WriteJSON(w, http.StatusBadRequest, err.Error())
 	}
 
-	review.Description = updatedReview.Description
+	review.Comment = updatedReview.Comment
 	review.MovieName = updatedReview.MovieName
 	review.Rating = updatedReview.Rating
 
