@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -11,6 +12,7 @@ type Review struct {
 	MovieName string    `json:"movie_name"`
 	Rating    int       `json:"rating"`
 	Comment   string    `json:"comment"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 type CreateReview struct {
@@ -31,5 +33,6 @@ func NewReview(movieName string, rating int, comment string) *Review {
 		MovieName: movieName,
 		Rating:    rating,
 		Comment:   comment,
+		CreatedAt: time.Now().UTC(),
 	}
 }

@@ -8,6 +8,6 @@ type Storage interface {
 	CreateReview(*Review) error
 	DeleteReview(uuid.UUID) error
 	GetReviewByID(uuid.UUID) (*Review, error)
-	GetReviews() (*[]Review, error)
+	GetReviews() ([]*Review, error)
 	UpdateReview(*Review) error
 }
