@@ -69,6 +69,10 @@ func (s *APIServer) handlePostMovieReview(w http.ResponseWriter, r *http.Request
 
 	review := NewReview(createReview.MovieName, createReview.Rating, createReview.Comment)
 
+	if err := validateRating(review.Rating); err != nil {
+		return WriteJSON(w, http.StatusBadRequest, err.Error())
+	}
+
 	if err := s.store.CreateReview(review); err != nil {
 		return WriteJSON(w, http.StatusInternalServerError, err.Error())
 	}
@@ -112,6 +116,10 @@ func (s *APIServer) handleUpdateMovieReview(w http.ResponseWriter, r *http.Reque
 		return WriteJSON(w, http.StatusBadRequest, err.Error())
 	}
 
+	if err := validateRating(updatedReview.Rating); err != nil {
+		return WriteJSON(w, http.StatusBadRequest, err.Error())
+	}
+
 	review.Comment = updatedReview.Comment
 	review.MovieName = updatedReview.MovieName
 	review.Rating = updatedReview.Rating
@@ -136,4 +144,11 @@ func makeHttpHandlerFunc(f APIFunc) http.HandlerFunc {
 			WriteJSON(w, http.StatusBadRequest, MyError{Error: err.Error()})
 		}
 	}
+}
+
+func validateRating(rating int8) error {
+	if rating < 1 || rating > 5 {
+		return fmt.Errorf("expected Rating to be between 1 and 5 but got %v", rating)
+	}
+	return nil
 }

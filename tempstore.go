@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 
 	"github.com/google/uuid"
 )
@@ -21,7 +20,7 @@ func (s *TempStore) init() error {
 		review := Review{
 			Id:        uuid.New(),
 			MovieName: fmt.Sprintf("Movie %v", i),
-			Rating:    rand.Intn(6),
+			Rating:    3,
 			Comment:   fmt.Sprintf("Description of review for movie %v", i),
 		}
 		s.tempDB = append(s.tempDB, review)
