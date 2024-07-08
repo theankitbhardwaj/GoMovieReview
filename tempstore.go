@@ -7,11 +7,11 @@ import (
 )
 
 type TempStore struct {
-	tempDB []Review
+	tempDB []*Review
 }
 
 func NewTempStore() (*TempStore, error) {
-	tempDB := make([]Review, 0)
+	tempDB := make([]*Review, 0)
 	return &TempStore{tempDB: tempDB}, nil
 }
 
@@ -23,14 +23,14 @@ func (s *TempStore) init() error {
 			Rating:    3,
 			Comment:   fmt.Sprintf("Description of review for movie %v", i),
 		}
-		s.tempDB = append(s.tempDB, review)
+		s.tempDB = append(s.tempDB, &review)
 	}
 
 	return nil
 }
 
 func (s *TempStore) GetReviews() ([]*Review, error) {
-	return &s.tempDB, nil
+	return s.tempDB, nil
 }
 
 func (s *TempStore) DeleteReview(reviewId uuid.UUID) error {
@@ -51,7 +51,7 @@ func (s *TempStore) DeleteReview(reviewId uuid.UUID) error {
 func (s *TempStore) UpdateReview(updatedReview *Review) error {
 	for i, review := range s.tempDB {
 		if review.Id == updatedReview.Id {
-			s.tempDB[i] = *updatedReview
+			s.tempDB[i] = updatedReview
 			return nil
 		}
 	}
@@ -60,7 +60,7 @@ func (s *TempStore) UpdateReview(updatedReview *Review) error {
 }
 
 func (s *TempStore) CreateReview(review *Review) error {
-	s.tempDB = append(s.tempDB, *review)
+	s.tempDB = append(s.tempDB, review)
 
 	return nil
 }
@@ -68,7 +68,7 @@ func (s *TempStore) CreateReview(review *Review) error {
 func (s *TempStore) GetReviewByID(reviewId uuid.UUID) (*Review, error) {
 	for _, review := range s.tempDB {
 		if review.Id == reviewId {
-			return &review, nil
+			return review, nil
 		}
 	}
 
