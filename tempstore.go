@@ -29,7 +29,7 @@ func (s *TempStore) init() error {
 	return nil
 }
 
-func (s *TempStore) GetReviews() (*[]Review, error) {
+func (s *TempStore) GetReviews() ([]*Review, error) {
 	return &s.tempDB, nil
 }
 
